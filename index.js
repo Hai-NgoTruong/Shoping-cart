@@ -7,7 +7,6 @@ mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopolo
 
 
 const productRoute = require('./api/routes/product.route')
-// const cartRoute = require('./routes/cart.route')
 
 const cookieParser = require('cookie-parser')
 const expressHbs  = require('express-handlebars');
@@ -15,7 +14,7 @@ const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
 const MongoStore = require('connect-mongo')(session)
-// const sessionMiddleware = require('./middlewares/session.middleware')
+
 
 const indexRoute = require('./routes/index.route')
 const port  = 3000; // mvc
@@ -43,11 +42,10 @@ app.use(session({
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
-//app.use(sessionMiddleware);
 app.use(express.static('public'));
+// app.use('/shop', productRoute);
 app.use('/', indexRoute)
-app.use('/shop', productRoute);
-// app.use('/cart', cartRoute);
+
 app.listen(port,function(){
 	console.log('server is listening on ' + port);
 });		
