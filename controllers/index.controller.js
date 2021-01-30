@@ -14,9 +14,29 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.get = (req, res) => {
-	res.render('user/signup', {csurfToken: req.csrfToken()});
+	let messages = req.flash('message');
+	if (req.user)
+		return res.redirect('/user/profile')
+	return res.render('user/signup', {
+		csurfToken: req.csrfToken(),
+		messages: messages,
+		hasErrors: messages.length > 0
+	});
+}
+module.exports.signin = (req, res) => {
+	let messages = req.flash('message');
+	if (req.user)
+		return res.redirect('/user/profile')
+	return res.render('user/signin', {
+		csurfToken: req.csrfToken(),
+		messages: messages,
+		hasErrors: messages.length > 0
+	});
+}
+module.exports.create = (req, res) => {
+	res.redirect('/user/profile	');
 }
 
-module.exports.create = (req, res) => {
-	res.redirect('/');
+module.exports.userProfile = (req, res) => {
+    res.render('user/profile');
 }

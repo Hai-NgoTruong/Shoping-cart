@@ -4,7 +4,7 @@ const app = express();
 require('dotenv').config()
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
-
+require('./config/passport');
 
 const productRoute = require('./api/routes/product.route')
 
@@ -13,8 +13,8 @@ const expressHbs  = require('express-handlebars');
 const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
+const validator = require('express-validator')
 const MongoStore = require('connect-mongo')(session)
-
 
 const indexRoute = require('./routes/index.route')
 const port  = 3000; // mvc
@@ -32,6 +32,7 @@ db.once('open', function() {
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(validator())
 app.use(session({
   secret: 'SESSION_SECRET',
   resave : false,
